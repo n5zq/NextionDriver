@@ -56,6 +56,7 @@ void processCommands() {
 //---------------------------------------------------------------------
       // YSF Linked Reflector
       char text[100];
+      FILE *deviceInfoFile;
   
       char logpath[] = "/var/log/pi-star";
       struct dirent *de;
