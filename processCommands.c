@@ -73,7 +73,7 @@ void processCommands() {
           sprintf(text, "t35.txt=\"?\"");
       } else {
     	    while ((de = readdir(dr)) != NULL)
-	        { 
+	    { 
 	          if (strncmp(de->d_name, "YSF", strlen("YSF")) == 0)
 	          {
 	            char *fullpath = malloc(strlen(logpath) + strlen(de->d_name) + 2);
@@ -86,21 +86,21 @@ void processCommands() {
 	    	          deviceInfoFile = fopen (fullpath, "r");  
 	    
 	    	          while ((read = getline(&line, &len, deviceInfoFile)) != -1) 
-                  {
-	      	            strfound = strstr(line, "Linked");
-	      	            if (strfound) 
-	      	            {
-			                  strfound = strtok(strfound, "\n");
-			                  strfound = trimwhitespace(strfound);
-			                  sprintf(reflector, "%s", strfound);
-	      	            }
-			            }
+                  	  {
+	      	            	strfound = strstr(line, "Linked");
+	      	            	if (strfound) 
+	      	            	{
+			    		strfound = strtok(strfound, "\n");
+			        	strfound = trimwhitespace(strfound);
+			        	sprintf(reflector, "%s", strfound);
+	      	            	}
+			  }
 
 	    	          fclose(deviceInfoFile);
-		              sprintf(text, "t35.txt=\"%s\"", reflector);
+		          sprintf(text, "t35.txt=\"%s\"", reflector);
 	            }
 	         } 
-        }
+      	    }
       }
       closedir(dr); 
     
