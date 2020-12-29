@@ -172,6 +172,55 @@ void basicFunctions() {
         else
             sprintf(text, "t23.txt=\"%d\"",getDiskFree(FALSE));
         sendCommand(text);
+        
+        // YSF Linked Reflector
+        char logpath[] = "/var/log/pi-star";
+        struct dirent *de;
+        char * line = NULL;
+        size_t len = 0;
+        ssize_t read;
+        char * strfound; 
+        char reflector[75]; 
+
+        DIR *dr = opendir(logpath); 
+  
+        if (dr == NULL)
+        {
+            sprintf(text, "t35.txt=\"?\"");
+        } else {
+    	    while ((de = readdir(dr)) != NULL)
+	        { 
+	        if (strncmp(de->d_name, "YSF", strlen("YSF")) == 0)
+	        {
+	            char *fullpath = malloc(strlen(logpath) + strlen(de->d_name) + 2);
+	            if (fullpath == NULL) 
+	            { 
+		            sprintf(text, "t35.txt=\"?\"");
+	            } else {
+	    	        sprintf(fullpath, "%s/%s", logpath, de->d_name);
+
+	    	        deviceInfoFile = fopen (fullpath, "r");  
+	    
+	    	        while ((read = getline(&line, &len, deviceInfoFile)) != -1) 
+                    {
+	      	            strfound = strstr(line, "Linked");
+	      	            if (strfound) 
+	      	            {
+			                strfound = strtok(strfound, "\n");
+			                strfound = trimwhitespace(strfound);
+			                sprintf(reflector, "%s", strfound);
+	      	            }
+	    	        }
+
+	    	        fclose(deviceInfoFile);
+		            sprintf(text, "t35.txt=\"%s\"", reflector);
+	            }
+	        }
+	    }
+   
+        closedir(dr); 
+    
+        sendCommand(text);
 
 #ifdef XTRA
         //RXFrequency
