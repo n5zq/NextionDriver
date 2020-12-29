@@ -55,6 +55,7 @@ int getDiskFree(int log);
 int openTalkingSocket(void); 
 int openListeningSocket(void); 
 int sendTransparentData(int display, char* msg);
+char *trimwhitespace(char *str);
 
 int search_group(int nr, group_t a[], int m, int n);
 int search_user_index_for_ID(int id, user_t a[], int m, int n);
