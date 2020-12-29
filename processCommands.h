@@ -21,5 +21,6 @@
 
 
 void processCommands();
+char *trimwhitespace(char *str);
 
 #endif
