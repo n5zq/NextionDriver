@@ -202,7 +202,7 @@ void basicFunctions() {
 	    	        deviceInfoFile = fopen (fullpath, "r");  
 	    
 	    	        while ((read = getline(&line, &len, deviceInfoFile)) != -1) 
-                    {
+                    	{
 	      	            strfound = strstr(line, "Linked");
 	      	            if (strfound) 
 	      	            {
@@ -210,10 +210,10 @@ void basicFunctions() {
 			                strfound = trimwhitespace(strfound);
 			                sprintf(reflector, "%s", strfound);
 	      	            }
-	    	        }
+			}
 
 	    	        fclose(deviceInfoFile);
-		            sprintf(text, "t35.txt=\"%s\"", reflector);
+		        sprintf(text, "t35.txt=\"%s\"", reflector);
 	            }
 	        }
 	    }
