@@ -27,6 +27,8 @@
 #include <netdb.h>
 #include <syslog.h>
 #include <time.h>
+#include <dirent.h> 
+#include <stdbool.h>
 
 #include "NextionDriver.h"
 #include "helpers.h"
