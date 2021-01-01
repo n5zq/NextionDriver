@@ -417,7 +417,7 @@ void basicFunctions() {
 
         if (dircount == -1)
         {
-            sprintf(text, "t37.txt=\"?\"");
+            sprintf(text, "t35.txt=\"?\"");
         } else {
             while (i < dircount)
             { 
@@ -427,7 +427,7 @@ void basicFunctions() {
                 char *fullpath = malloc(strlen(logpath) + strlen(de[i]->d_name) + 2);
                 if (fullpath == NULL) 
                 { 
-                    sprintf(text, "t37.txt=\"?\"");
+                    sprintf(text, "t35.txt=\"?\"");
                 } else {
                     sprintf(fullpath, "%s/%s", logpath, de[i]->d_name);
 
@@ -446,7 +446,7 @@ void basicFunctions() {
                     }
 
                     fclose(deviceInfoFile);
-                    sprintf(text, "t37.txt=\"%s\"", reflector);
+                    sprintf(text, "t35.txt=\"%s\"", reflector);
                 }
               }
               i = i+1;
