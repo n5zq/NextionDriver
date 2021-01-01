@@ -57,3 +57,58 @@ void processCommands() {
 
 	
 }
+
+char *ysfReflector(char* text) 
+{
+    char logpath[] = "/var/log/pi-star";
+    struct dirent **de;
+    FILE *logFile;
+    char * line = NULL;
+    size_t len = 0;
+    ssize_t read;
+    char * strfound;
+    char * substrfound; 
+    char reflector[75];
+    int i = 0;
+    int dircount; 
+  
+    dircount = scandir(logpath, &de, NULL, alphasort); 
+  
+    if (dircount == -1)
+    {
+        sprintf(text, "t35.txt=\"?\"");
+    } else {
+	while (i < dircount)
+	{ 
+	  if (strncmp(de[i]->d_name, "YSF", strlen("YSF")) == 0)
+	  {
+	    char *fullpath = malloc(strlen(logpath) + strlen(de[i]->d_name) + 2);
+	    if (fullpath == NULL) 
+	    { 
+		sprintf(text, "t35.txt=\"?\"");
+	    } else {
+	    	sprintf(fullpath, "%s/%s", logpath, de[i]->d_name);
+
+	    	logFile = fopen (fullpath, "r");  
+	    
+	    	while ((read = getline(&line, &len, logFile)) != -1) {
+	      	    strfound = strstr(line, "Linked");
+	      	    if (strfound) 
+	      	    {
+			strfound = strtok(strfound, "\n");
+			strfound = trimwhitespace(strfound);
+			substrfound = substring(strfound,11,strlen(strfound));
+			sprintf(reflector, "%s", substrfound);
+	      	    }
+	    	}
+
+	    	fclose(logFile);
+		sprintf(text, "t35.txt=\"%s\"", reflector);
+	    }
+	  }
+	  i = i+1;
+	}
+    }
+    
+    return text;
+}
