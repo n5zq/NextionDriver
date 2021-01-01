@@ -450,4 +450,63 @@ void basicFunctions() {
         sendCommand(text);
         sendCommand("click S0,1");
     }
+    
+    if ((page==3)&&(check%8==0)) {
+        FILE *deviceInfoFile;
+        double val;
+
+        // YSF Linked Reflector
+        char logpath[] = "/var/log/pi-star";
+        struct dirent **de;
+        char * line = NULL;
+        size_t len = 0;
+        ssize_t read;
+        char * strfound;
+        char * substrfound; 
+        char reflector[75];
+        int i = 0;
+        int dircount; 
+
+        dircount = scandir(logpath, &de, NULL, alphasort); 
+
+        if (dircount == -1)
+        {
+            sprintf(text, "t37.txt=\"?\"");
+        } else {
+            while (i < dircount)
+            { 
+              if (strncmp(de[i]->d_name, "YSF", strlen("YSF")) == 0)
+              {
+                printf("%s\r\n",de[i]->d_name);
+                char *fullpath = malloc(strlen(logpath) + strlen(de[i]->d_name) + 2);
+                if (fullpath == NULL) 
+                { 
+                    sprintf(text, "t37.txt=\"?\"");
+                } else {
+                    sprintf(fullpath, "%s/%s", logpath, de[i]->d_name);
+
+                    deviceInfoFile = fopen (fullpath, "r");  
+
+                    while ((read = getline(&line, &len, deviceInfoFile)) != -1) {
+                        strfound = strstr(line, "Linked");
+                        if (strfound) 
+                        {
+                            printf("%s",strfound);
+                            strfound = strtok(strfound, "\n");
+                            strfound = trimwhitespace(strfound);
+                            substrfound = substring(strfound,11,strlen(strfound));
+                            sprintf(reflector, "%s", substrfound);
+                        }
+                    }
+
+                    fclose(deviceInfoFile);
+                    sprintf(text, "t37.txt=\"%s\"", reflector);
+                }
+              }
+              i = i+1;
+            }
+        }
+
+        sendCommand(text);
+    }
 }
