@@ -451,7 +451,7 @@ void basicFunctions() {
         sendCommand("click S0,1");
     }
     
-    if ((page==3)&&(check%8==0)) {
+    if (page==3) {
         FILE *deviceInfoFile;
         double val;
 
