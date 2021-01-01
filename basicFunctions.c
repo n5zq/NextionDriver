@@ -215,7 +215,7 @@ void basicFunctions() {
                         strfound = strtok(strfound, "\n");
                         strfound = trimwhitespace(strfound);
                         substrfound = substring(strfound,11,strlen(strfound));
-                        sprintf(reflector, "%s", strfound);
+                        sprintf(reflector, "%s", substrfound);
                     }
                 }
 
