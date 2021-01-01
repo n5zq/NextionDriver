@@ -21,5 +21,6 @@
 
 
 void processCommands();
+char *ysfReflector(char* text) ;
 
 #endif
