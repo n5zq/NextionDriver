@@ -181,13 +181,12 @@ void basicFunctions() {
     char * line = NULL;
     size_t len = 0;
     ssize_t read;
-    char * strfound; 
+    char * strfound;
+    char * substrfound; 
     char reflector[75];
     int i = 0;
     int dircount; 
   
-    // opendir() returns a pointer of DIR type.  
-    //DIR *dr = opendir(logpath);
     dircount = scandir(logpath, &de, NULL, alphasort); 
   
     if (dircount == -1)
@@ -215,6 +214,7 @@ void basicFunctions() {
                         printf("%s",strfound);
                         strfound = strtok(strfound, "\n");
                         strfound = trimwhitespace(strfound);
+                        substrfound = substring(strfound,11,strlen(strfound));
                         sprintf(reflector, "%s", strfound);
                     }
                 }
